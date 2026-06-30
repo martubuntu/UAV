@@ -1,0 +1,131 @@
+uav_pid_mission:
+  ros__parameters:
+    # Mission phase:
+    # hover_only  : 只悬停
+    # square_only : 悬停后飞正方形
+    # circle_only : 悬停后飞圆形
+    # full        : 悬停 -> 正方形 -> 圆形
+    mission_phase: "full"
+
+    # End behavior:
+    # hold : 任务结束后悬停
+    # land : 任务结束后先 final_hold_time 悬停，然后请求 AUTO.LAND
+    finish_action: "land"
+
+    # Hover behavior
+    hover_time: 10.0
+    pre_task_hold_time: 5.0
+
+    # Final hold before landing
+    final_hold_time: 5.0
+
+    # Circle trajectory
+    # 保持当前圆形参数不变
+    circle_radius: 1.5
+    circle_speed: 0.18
+
+    # Line trajectory
+    line_speed: 0.20
+
+    # Adaptive circle phase
+    circle_error_slow: 0.25
+    circle_error_very_slow: 0.50
+    circle_slow_scale: 0.60
+    circle_min_scale: 0.30
+
+    # Square trajectory
+    square_side: 2.5
+    square_hold_time: 5.0
+    square_step: 0.10
+    square_target_tolerance: 0.08
+    square_target_update_period: 0.20
+
+    # Control loop
+    control_rate_hz: 30.0
+
+    # Manual real-flight operation
+    auto_offboard: false
+    auto_arm: false
+
+    # Position judgement
+    position_tolerance: 0.18
+    settle_time: 0.8
+    landed_height_threshold: 0.15
+
+    # Vertical velocity limits
+    max_vz_up: 0.22
+    max_vz_down: 0.16
+
+    # Hover / hold control parameters
+    hover_max_vxy: 0.20
+
+    hover_pid_x_kp: 0.55
+    hover_pid_x_ki: 0.0
+    hover_pid_x_kd: 0.10
+    hover_pid_x_integral_limit: 0.3
+
+    hover_pid_y_kp: 0.55
+    hover_pid_y_ki: 0.0
+    hover_pid_y_kd: 0.10
+    hover_pid_y_integral_limit: 0.3
+
+    # Square control parameters
+    square_max_vxy: 0.22
+
+    square_pid_x_kp: 0.60
+    square_pid_x_ki: 0.0
+    square_pid_x_kd: 0.12
+    square_pid_x_integral_limit: 0.3
+
+    square_pid_y_kp: 0.60
+    square_pid_y_ki: 0.0
+    square_pid_y_kd: 0.12
+    square_pid_y_integral_limit: 0.3
+
+    # Circle control parameters
+    # 保持当前圆形控制参数不变
+    circle_max_vxy: 0.30
+
+    circle_pid_x_kp: 0.70
+    circle_pid_x_ki: 0.0
+    circle_pid_x_kd: 0.10
+    circle_pid_x_integral_limit: 0.3
+
+    circle_pid_y_kp: 0.70
+    circle_pid_y_ki: 0.0
+    circle_pid_y_kd: 0.10
+    circle_pid_y_integral_limit: 0.3
+
+    # Legacy Z PID gains
+    # 当前 Z 轴主要由 altitude_* 控制，这组参数用于兼容 PidController 配置。
+    pid_z_kp: 0.25
+    pid_z_ki: 0.0
+    pid_z_kd: 0.05
+    pid_z_integral_limit: 0.05
+
+    # Dedicated altitude controller
+    altitude_kp: 0.55
+    altitude_ki: 0.08
+    altitude_kd: 0.10
+    altitude_deadband: 0.04
+    altitude_integral_limit: 0.35
+    altitude_derivative_alpha: 0.25
+
+    # MAVROS topics/services
+    mavros_state_topic: "/mavros/state"
+    mavros_local_pose_topic: "/mavros/local_position/pose"
+    mavros_raw_setpoint_topic: "/mavros/setpoint_raw/local"
+    mavros_arming_service: "/mavros/cmd/arming"
+    mavros_set_mode_service: "/mavros/set_mode"
+
+    # Visualization
+    rviz_frame_id: "map"
+    path_min_step: 0.02
+    path_max_size: 5000
+
+    # CSV trajectory logging
+    trajectory_log_enabled: true
+    trajectory_log_directory: "/home/jetson/uav_pid_mavros_logs/csv"
+    trajectory_log_prefix: "trajectory_"
+
+    service_request_period: 1.0
